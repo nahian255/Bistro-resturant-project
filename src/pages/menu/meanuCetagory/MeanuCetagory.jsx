@@ -5,7 +5,7 @@ const MeanuCetagory = ({ items, img, title }) => {
     console.log(items);
     return (
         <div>
-            <Cover img={img} title={title}></Cover>
+            {title && <Cover img={img} title={title}></Cover>}
             <Maps arry={items}></Maps>
         </div>
     );

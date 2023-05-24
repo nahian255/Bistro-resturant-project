@@ -1,5 +1,4 @@
 import { Parallax } from "react-parallax";
-import PopularMeanu from "../../home/popularMeanu/PopularMeanu";
 import Button from "../../../component/button/Button";
 
 
