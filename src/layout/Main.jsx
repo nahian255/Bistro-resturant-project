@@ -4,10 +4,10 @@ import NavBar from '../pages/shared/NavBar';
 
 const Main = () => {
     const location = useLocation()
-    const noNavFooter = location.pathname.includes('login');
+    const noNavFooter = location.pathname.includes('login') || location.pathname.includes('signup');
     return (
         <div>
-            {noNavFooter || <NavBar></NavBar>}
+            <NavBar></NavBar>
             <Outlet></Outlet>
             {noNavFooter || <Footer></Footer>}
         </div>
