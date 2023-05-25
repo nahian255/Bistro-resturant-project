@@ -6,12 +6,15 @@ import 'react-tabs/style/react-tabs.css';
 import useMeanu from "../../hooks/useMeanu";
 import OrderTabs from "./OrderTabs";
 import { useState } from "react";
+// import { useParams } from "react-router-dom";
 
 const Order = () => {
+    // const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks'];
+    // const { category } = useParams()
+
     const [tabIndex, setTabIndex] = useState();
 
     const [meanu] = useMeanu();
-
     const desserts = meanu?.filter(item => item.category === 'dessert');
     const soup = meanu?.filter(item => item.category === 'soup');
     const salad = meanu?.filter(item => item.category === 'salad');
