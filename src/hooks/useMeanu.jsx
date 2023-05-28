@@ -6,7 +6,7 @@ const useMeanu = () => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetch('menu.json')
+        fetch('http://localhost:5000/meanu')
             .then(res => res.json())
             .then(data => {
                 setMeanu(data)

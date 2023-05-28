@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import img from '../../assets/others/authentication2.png'
 import { BistroContext } from '../../provider/AuthProvider';
 
@@ -8,16 +8,27 @@ const Singup = () => {
     const { creatUser } = useContext(BistroContext)
     const [email, setEmail] = useState()
     const [pass, setPass] = useState()
-
+    const navigate = useNavigate()
     const handelSubmit = () => {
         creatUser(email, pass)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
                 console.log(user);
+                const userData = { name: user.name, email: user.email }
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                })
+                    .then(res => res.json())
+                    .then(data => console.log(data))
+                navigate('/')
                 // ...
             })
-            .catch((error) => {
+            .catch(() => {
                 // const errorCode = error.code;
                 // const errorMessage = error.message;
                 // ..
