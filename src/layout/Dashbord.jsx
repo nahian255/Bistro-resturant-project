@@ -1,6 +1,10 @@
 import { Link, Outlet } from "react-router-dom";
 
 const Dashbord = () => {
+
+    // todo: isAdmien loaded from database dynamicllyy...
+    const isAdmien = true;
+
     return (
         <div className="drawer drawer-mobile">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -12,10 +16,22 @@ const Dashbord = () => {
             <div className="drawer-side">
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 bg-orange-200 text-base-content">
+                    {
+                        isAdmien ?
+                            <>
+                                <li><Link to='/'>Home</Link></li>
+                                <li><Link to='/dashboard/allusers'>All users</Link></li>
 
-                    <li><Link to='/'>Home</Link></li>
-                    <li><Link to='/dashboard/mycart'>MY cart</Link></li>
-                    <li><Link to='/'>Home</Link></li>
+                            </>
+                            :
+                            <>
+                                <li><Link to='/'>Home</Link></li>
+                                <li><Link to='/dashboard/mycart'>MY cart</Link></li>
+                                <li><Link to='/'>Home</Link></li>
+                                <li><Link to='/'>Home</Link></li>
+                            </>
+                    }
+
                 </ul>
 
             </div>

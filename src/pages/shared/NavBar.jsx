@@ -6,7 +6,9 @@ import useCart from "../../hooks/useCart";
 
 const NavBar = () => {
     const [cart, setLoading] = useCart()
-    console.log(cart);
+    // console.log(cart);
+
+
 
     const { user, singOut } = useContext(BistroContext)
     const handelSingOut = () => {

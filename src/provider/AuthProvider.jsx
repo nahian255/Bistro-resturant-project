@@ -1,13 +1,16 @@
 import { createContext, useEffect } from 'react';
 import app from '../firebase/firebase.config';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { useState } from 'react';
+import { GoogleAuthProvider } from "firebase/auth";
+
 
 
 
 export const BistroContext = createContext(null)
 
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
 
@@ -23,6 +26,12 @@ const AuthProvider = ({ children }) => {
         setLoading(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
+
+    const googleLogin = () => {
+        // setLoading(true)
+        return signInWithPopup(auth, provider)
+    }
+
     const singOut = () => {
         setLoading(true)
         return signOut(auth)
@@ -41,7 +50,7 @@ const AuthProvider = ({ children }) => {
 
 
 
-    const authInfo = { loginUser, creatUser, loading, singOut, user }
+    const authInfo = { loginUser, creatUser, loading, singOut, user, googleLogin }
     return (
         <div>
             <BistroContext.Provider value={authInfo}>

@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { BistroContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import SocialLogin from "../../component/socialLogin/SocialLogin";
 
 
 
@@ -85,8 +86,8 @@ const Login = () => {
                                 <button disabled={disable} onClick={handelSubmit} className="btn btn-primary">Login</button>
                             </div>
                             <p>new here? go to the <Link to="/signup" className="text-blue-500">register page</Link></p>
-
                         </div>
+                        <SocialLogin></SocialLogin>
                     </div>
                     <div className="text-center w-1/2 lg:text-left">
                         <img src={img} alt="" />

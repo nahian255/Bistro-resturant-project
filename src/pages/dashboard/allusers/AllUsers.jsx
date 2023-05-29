@@ -1,36 +1,46 @@
-import { useState } from "react";
-import SectionTitle from "../../component/sectionTitle/SectionTitle";
-import useCart from "../../hooks/useCart";
-
-const Mycart = () => {
-
-    const [cart] = useCart()
-    const [control, setControl] = useState(true)
-    console.log(cart);
-    const total = cart?.reduce((sum, item) => item.price + sum, 0)
+import { useQuery } from "@tanstack/react-query";
 
 
-    const handelDelete = id => {
-        fetch(`http://localhost:5000/carts/${id}`, {
+
+const AllUsers = () => {
+
+    const { data: users = [], refetch } = useQuery(['users'], async () => {
+        const res = await fetch('http://localhost:5000/users')
+        return res.json()
+    })
+
+    const handelAdmin = item => {
+        fetch(`http://localhost:5000/users/admin/${item._id}`, {
+            method: 'PATCH'
+        })
+            .then(res => res.json())
+            .then(data => {
+                refetch()
+                if (data.modifiedCount)
+                    alert('you are admin now')
+            })
+    };
+
+    const handelDelete = item => {
+        fetch(`http://localhost:5000/users/admin/${item._id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
             .then(data => {
                 if (data.deletedCount > 0) {
-                    alert('item deleted')
-                    setControl(!control)
+                    refetch()
+                    alert('user deleted')
                 }
             })
-    }
-
+    };
 
     return (
         <div className="p-20">
-            <div className="">
-                <SectionTitle subHeading={'My cart'} heading={'wanna add more'}></SectionTitle>
-            </div>
-            <h2>my order {cart?.length}</h2>
-            <h4>total price ={total}</h4>
+            {/* <div className="">
+            <SectionTitle subHeading={'My users'} heading={'wanna add more'}></SectionTitle>
+        </div> */}
+            <h2>my order {users?.length}</h2>
+            {/* <h4>to-tal price ={total}</h4> */}
             <section className="">
                 <div className="overflow-x-auto w-full">
                     <table className="table w-full">
@@ -40,12 +50,13 @@ const Mycart = () => {
                                 <th>Name</th>
                                 <th>Job</th>
                                 <th>Favorite Color</th>
-                                <th></th>
+                                <th>action</th>
+                                <th>action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {cart &&
-                                cart.map((item) => (
+                            {users &&
+                                users.map((item) => (
                                     <tr key={item._id}>
                                         <td>
                                             <div className="flex items-center space-x-3">
@@ -62,9 +73,14 @@ const Mycart = () => {
                                         <td>
                                             <span className="badge badge-ghost badge-sm">Desktop </span>
                                         </td>
-                                        <td>{item.price}</td>
+                                        <td>{item.email}</td>
+                                        <td>{item.role === 'admin' ? 'admin' : <button
+                                            onClick={() => handelAdmin(item)}
+                                            className="btn bg-orange-200 btn-xs">put admin</button>}</td>
                                         <th>
-                                            <button onClick={() => handelDelete(item._id)} className="btn bg-red-500 btn-xs">delete</button>
+                                            <button
+                                                onClick={() => handelDelete(item)}
+                                                className="btn bg-red-500 btn-xs">delete</button>
                                         </th>
                                     </tr>
                                 ))
@@ -79,4 +95,4 @@ const Mycart = () => {
     );
 };
 
-export default Mycart;
+export default AllUsers;
